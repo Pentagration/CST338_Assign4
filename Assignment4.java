@@ -12,7 +12,17 @@ public class Assign4
 	   }
 }
 
-class classname
+interface BarcodeIO
+{
+	
+}
+
+class BarcodeImage implements Cloneable
+{
+	
+}
+
+class DataMatrix implements BarcodeIO
 {
 	
 }

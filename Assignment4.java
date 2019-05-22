@@ -62,6 +62,7 @@ class BarcodeImage implements Cloneable
 	{
 		
 	}
+	//Constructors END
 	
 	//Individual Pixel getter 
 	// return is actual value and error flag. Error returns false
@@ -96,5 +97,14 @@ class BarcodeImage implements Cloneable
 
 class DataMatrix implements BarcodeIO
 {
+	public static final char BLACK_CHAR = '*';
+	public static final char WHITE_CHAR = ' ';  
+	
+	private BarcodeImage image;
+	
+	private String text;
+	
+	private int actualWidth, actualHeight;
+	
 	
 }

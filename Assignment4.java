@@ -35,7 +35,63 @@ interface BarcodeIO
 
 class BarcodeImage implements Cloneable
 {
+	public static final int MAX_HEIGHT = 30;    
+	public static final int MAX_WIDTH = 65; 
+	//If inbound matrix is smaller than max size, instantiate to false (blank) 
 	
+	private boolean[][] imageData
+	// White -> false
+	// Black -> true
+	
+	
+	// Constructors (2 minimum) 
+	
+	// Default Constructor 
+	// Instantiates Max size array and fills with all blanks
+	BarcodeImage()
+	{
+		for(int x=0;x<MAX_WIDTH;x++) {
+			for(int y=0;y<MAX_HEIGHT;y++) {
+				imageData[x][y] = false;
+			}
+		}
+	}
+	
+	// Takes 1d string array. Converts to "the internal 2d array of booleans"
+	BarcodeImage(String[] strData)
+	{
+		
+	}
+	
+	//Individual Pixel getter 
+	// return is actual value and error flag. Error returns false
+	boolean getPixel(int row, int col)
+	{
+		
+	}
+	
+	//Individual Pixel setter
+	 boolean setPixel(int row, int col, boolean value)
+	 {
+		 // No input control listed in documentation? 
+		 imageData[row][col] = value;
+	 }
+	 
+	 
+	 // Optional function 
+	 // Checks incoming data for "very conceivable size or null error"
+	 private boolean checkSize(String[] data)
+	 {
+		 
+	 }
+	 
+	 // Optional Testing method
+	 displayToConsole()
+	 {
+		 
+	 }
+	 
+	 // clone() overwrite cloneable method 
 }
 
 class DataMatrix implements BarcodeIO

@@ -14,6 +14,22 @@ public class Assign4
 
 interface BarcodeIO
 {
+	// All Implimentations expected to store img and text 
+	BarcodeImage img;
+	
+	String text;
+	
+	public boolean scan(BarcodeImage bc);
+	
+	public boolean readText(String text);
+	
+	public boolean generateImageFromText();
+	
+	public boolean translateImageToText();
+	
+	public void displayTextToConsole();
+	
+	public void displayImageToConsole();
 	
 }
 

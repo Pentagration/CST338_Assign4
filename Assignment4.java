@@ -62,14 +62,9 @@ class BarcodeImage implements Cloneable
 	{
 
 	}
-<<<<<<< HEAD
+	//Constructors END
 
 	//Individual Pixel getter
-=======
-	//Constructors END
-	
-	//Individual Pixel getter 
->>>>>>> 371155a97c37c7e53807ef206d0ac78ce9d8cbc7
 	// return is actual value and error flag. Error returns false
 	boolean getPixel(int row, int col)
 	{
@@ -102,65 +97,14 @@ class BarcodeImage implements Cloneable
 
 class DataMatrix implements BarcodeIO
 {
-<<<<<<< HEAD
-	//
-private String text;
-private int actualWidth;
-private int actualHeight;
-private BarcodeImage image;
-public static final char BLACK_CHAR = '*';
-public static final char WHITE_CHAR = ' ';
-public static final char boarderHorizontal = '-';
-public static final char boarderVertical = "|";
-
-}
-
-//Constructors 3 of them
-//default
-public DataMatrix ()
-{
-	this.text = " ";
-	this.actualHeight = 0;
-	this.actualWidth = 0;
-	this.image = new BarcodeImage();
-}
-// sets the image but leaves the text at its default value.
-// Call scan() and avoid duplication of code here.
-public DataMatrix(BarcodeImage image)
-{
-	scan(image);
-}
-
-//sets the text but leaves the image at its default value.
-//Call readText() and avoid duplication of code here.
-public DataMatrix(String text)
-{
-	readText(text);
-}
-
-//mutator for text
-public boolean readText(String text)
-{
-	if(text == null || text.equals(""))
-		return false;
-	this.text = text;
-	return true;
-}
-
-public scan(BarcodeImage image)
-{
-
-}
-=======
 	public static final char BLACK_CHAR = '*';
-	public static final char WHITE_CHAR = ' ';  
-	
+	public static final char WHITE_CHAR = ' ';
+
 	private BarcodeImage image;
-	
+
 	private String text;
-	
+
 	private int actualWidth, actualHeight;
-	
-	
+
+
 }
->>>>>>> 371155a97c37c7e53807ef206d0ac78ce9d8cbc7

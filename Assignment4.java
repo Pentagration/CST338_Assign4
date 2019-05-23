@@ -60,7 +60,28 @@ class BarcodeImage implements Cloneable
 	// Takes 1d string array. Converts to "the internal 2d array of booleans"
 	BarcodeImage(String[] strData)
 	{
-
+	   if (checkSize(strData) == true)
+	   {
+	      //convert each letter to ascii then binary and set appropriately
+	      //1s are *, 0s are blank
+	      for (int i = 0; i < strData.length; i++) // columns
+	      {
+	         //converts letter to binary
+	         int temp = Integer.toBinaryString(strData[i]); 
+	         
+	         //add *s to the rows where binary = 1
+	         while (temp > 0)
+	         {
+	            int row = 0;
+	            int lastDigit = temp % 10; 
+	            if (lastDigit == 1)
+	               {
+	               this.imageData[strData[i]][row] = true;
+	               }
+	            temp = temp/10;
+	         }
+	      }
+	   }
 	}
 	//Constructors END
 
@@ -68,7 +89,14 @@ class BarcodeImage implements Cloneable
 	// return is actual value and error flag. Error returns false
 	boolean getPixel(int row, int col)
 	{
-
+	   if (row <= MAX_WIDTH && col <= MAX_HEIGHT)
+	   {
+	      return imageData[row][col];
+	   }
+	   else
+	   {
+	      return false;
+	   }
 	}
 
 	//Individual Pixel setter
@@ -76,6 +104,8 @@ class BarcodeImage implements Cloneable
 	 {
 		 // No input control listed in documentation?
 		 imageData[row][col] = value;
+		 
+		 return value;
 	 }
 
 
@@ -83,7 +113,14 @@ class BarcodeImage implements Cloneable
 	 // Checks incoming data for "very conceivable size or null error"
 	 private boolean checkSize(String[] data)
 	 {
-
+	    if(data.length > MAX_WIDTH || data == null) //should this be -1?
+	    {
+	       return false;
+	    }
+	    else
+	    {
+	       return true;
+	    }
 	 }
 
 	 // Optional Testing method
@@ -93,6 +130,17 @@ class BarcodeImage implements Cloneable
 	 }
 
 	 // clone() overwrite cloneable method
+	 public Object clone()
+	 {
+	    try
+	    {
+	       return super.clone(); //simple version since type is boolean right?
+	    }
+	    catch(CloneNotSupportedException e)
+	    {
+	       return null;
+	    }
+	 }
 }
 
 class DataMatrix implements BarcodeIO
@@ -106,5 +154,21 @@ class DataMatrix implements BarcodeIO
 
 	private int actualWidth, actualHeight;
 
-
+	//defaut constructor
+	DataMatrix()
+	{
+	   
+	}
+	
+	//barcode constructor
+	DataMatrix(BarcodeImage image)
+	{
+	   
+	}
+	
+	//string constructor
+	DataMatrix(String text)
+	{
+	   
+	}
 }

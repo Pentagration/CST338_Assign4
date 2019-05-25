@@ -189,7 +189,10 @@ class DataMatrix implements BarcodeIO
    //defaut constructor
    DataMatrix()
    {
-      
+      this.text = "";
+      this.actualHeight = 0;
+      this.actualWidth = 0;
+      this.image = new BarcodeImage();
    }
    
    //barcode constructor

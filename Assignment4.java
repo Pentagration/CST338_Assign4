@@ -56,7 +56,7 @@ class BarcodeImage implements Cloneable
       {
          for(int y = 0; y < MAX_HEIGHT; y++) 
          {
-            imageData[x][y] = false;
+            this.setPixel(x, y, false);
          }
       }
    }

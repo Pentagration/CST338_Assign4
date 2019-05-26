@@ -222,6 +222,13 @@ class DataMatrix implements BarcodeIO
 
    }
 
+
+   //Accessors
+   public getText()
+   {
+
+   }
+
    @Override
    public boolean scan(BarcodeImage bc)
    {
@@ -230,11 +237,11 @@ class DataMatrix implements BarcodeIO
 
      try
      {
-        return super.clone();
+      DataMatrix clone = (DataMatrix)BarCodeIO.clone();
      }
      catch(CloneNotSupportedException e)
      {
-       //Intentionally Emty
+       //Intentionally Empty
      }
 
 

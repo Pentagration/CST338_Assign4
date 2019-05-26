@@ -224,9 +224,14 @@ class DataMatrix implements BarcodeIO
 
 
    //Accessors
-   public getText()
+   public getActualWidth()
    {
+     return actualWidth;
+   }
 
+   public getActualHeight()
+   {
+     return actualHeight;
    }
 
    @Override

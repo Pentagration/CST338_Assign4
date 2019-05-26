@@ -16,6 +16,13 @@ public class Module4
 
         test1.displayToConsole();
         test2.displayToConsole();
+
+        String test = "Datamatrix test";
+        DataMatrix test3 = new DataMatrix(test);
+
+        test3.displayTextToConsole();
+        test3.generateImageFromText();
+        test3.displayImageToConsole();
     }
 }
 
@@ -257,21 +264,21 @@ class DataMatrix implements BarcodeIO
     //barcode constructor
     DataMatrix(BarcodeImage image)
     {
-       this.text = "";
-       scan(image);
+        this.text = "";
+        scan(image);
     }
 
     //string constructor
     DataMatrix(String text)
     {
-       this.text = text;
-       generateImageFromText();
+        this.text = text;
+        generateImageFromText();
     }
 
     @Override
     public boolean scan(BarcodeImage bc)
     {
-        try 
+        try
         {
             image = (BarcodeImage)bc.clone();
             this.actualHeight = getActualHeight();
@@ -298,7 +305,7 @@ class DataMatrix implements BarcodeIO
         if (this.text.length() < BarcodeImage.MAX_WIDTH) {
             String[] tempArray = this.text.split(" ");
 
-            for (int i = 0; i < tempArray.length; i++)
+            for (int i = 0; i < tempArray.length - 1; i++)
             {
                 tempArray[i] = tempArray[i] + " ";
             }
@@ -315,82 +322,134 @@ class DataMatrix implements BarcodeIO
     @Override
     public boolean translateImageToText()
     {
-        // TODO Auto-generated method stub
-        return false;
+        // read each column and create binary number
+        // convert binary number to decimal for ascii
+        // convert ascii number to letter
+
+        // char[] to hold each letter
+        char[] tempChar = new char[this.text.length()];
+        // String to hold the binary number generated
+        String binNumber = "";
+        // int for ascii number, will use Integer.parseInt(binaryString, 2)
+        int ascii = 0;
+        //int for char[] counter
+        int counter = 0;
+
+        for (int i = 1; i < this.getActualWidth(); i++)
+        {
+            for (int j = 0; j < this.getActualHeight(); j++)
+            {
+                //generate binary number string
+                if (this.image.getPixel(i, j) == true)
+                {
+                    binNumber = binNumber + '1';
+                }
+                else
+                {
+                    binNumber = binNumber + '0';
+                }
+
+                //convert to ascii
+                ascii = Integer.parseInt(binNumber, 2);
+
+                //convert ascii to char and add to array
+                tempChar[counter] = (char) ascii;
+
+                //increment counter and reset others
+                counter++;
+                binNumber = "";
+                ascii = 0;
+            }
+        }
+
+        this.text = new String(tempChar);
+
+        return true;
     }
 
     @Override
     public void displayTextToConsole()
     {
-        // TODO Auto-generated method stub
+        System.out.println(this.text);
 
     }
 
     @Override
     public void displayImageToConsole()
     {
-        // TODO Auto-generated method stub
+        for(int i = BarcodeImage.MAX_HEIGHT - this.getActualHeight(); i < BarcodeImage.MAX_HEIGHT; i++)
+        {
+            for(int j = 0; j < this.getActualWidth(); j++)
+
+            {
+                if (this.image.getPixel(i, j) == true)
+                {
+                    System.out.print("*");
+                }
+                else
+                {
+                    System.out.print(" ");
+                }
+            }
+
+            System.out.print("\n");
+        }
 
     }
 
     public int getActualHeight()
     {
-      int height = 0;
-      for (int i = 0; i < BarcodeImage.MAX_HEIGHT;i++)
-      {
-         if (image.getPixel(i, 0) == false)
-            break;
-         ++height;
-      }
-      return height;
+        int height = 0;
+        for (int i = BarcodeImage.MAX_HEIGHT - 1; i > 0; i--)
+        {
+            if (this.image.getPixel(i, 0) == false)
+                break;
+            ++height;
+        }
+        return height;
     }
 
     public int getActualWidth()
     {
-      int width = 0;
-      int height = getActualHeight();
-      for (int i = 0; i < BarcodeImage.MAX_WIDTH; i++)
-      {
-         if (image.getPixel(height, i) == false)
-            break;
-         ++width;
-      }
-      return width;
+        int width = 0;
+        int height = getActualHeight();
+        for (int i = 0; i < BarcodeImage.MAX_WIDTH; i++)
+        {
+            if (image.getPixel(BarcodeImage.MAX_HEIGHT - 1, i) == false)
+                break;
+            ++width;
+        }
+        return width;
     }
 
     private void cleanImage()
     {
-      offset = BarcodeImage.MAX_HEIGHT - (this.actualHeight + 1);
-      shiftImageDown(offset);
-      offset = BarcodeImage.MAX_WIDTH - (this.actualWidth + 1);
-      shiftImageLeft(offset);
+        offset = BarcodeImage.MAX_HEIGHT - this.actualHeight;
+        shiftImageDown(offset);
+        offset = BarcodeImage.MAX_WIDTH - this.actualWidth;
+        shiftImageLeft(offset);
     }
 
     private void shiftImageDown(int offset)
     {
-      boolean pixel = false;
-      for(int x = actualWidth; x >= 0; x--)
+        for(int x = actualWidth; x >=0; x--)
         {
             for(int y = actualHeight; y >= 0; y--)
             {
-               pixel = image.getPixel(x, y);
-               image.setPixel(x, y, false);
-               image.setPixel(x, y + offset, pixel);
+                if(y == 0 || x == MAX_HEIGHT - 1)
+                {
+                    this.setPixel(x, y, true);
+                }
+                else
+                {
+                    this.setPixel(x, y, false);
+                }
             }
         }
     }
 
     private void shiftImageLeft(int offset)
     {
-      boolean pixel = false;
-      for(int x = 0; x <= actualWidth; x++)
-        {
-            for(int y = actualHeight; y >= 0; y--)
-            {
-               pixel = image.getPixel(x, y);
-               image.setPixel(x, y, false);
-               image.setPixel(x, y + offset, pixel);
-            }
-        }
+
     }
 }

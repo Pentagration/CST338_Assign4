@@ -52,51 +52,55 @@ class BarcodeImage implements Cloneable
    // Instantiates Max size array and fills with all blanks
    public BarcodeImage()
    {
-      for(int x = 0; x < MAX_WIDTH; x++) 
-      {
-         for(int y = 0; y < MAX_HEIGHT; y++) 
-         {
-            this.setPixel(x, y, false);
-         }
-      }
+     this.imageData = new boolean[MAX_WIDTH][MAX_HEIGHT];
+       
+       for(int x=0;x<MAX_WIDTH;x++) 
+     {
+        for(int y=0;y<MAX_HEIGHT;y++) 
+        {
+           this.setPixel(x, y, false);
+        }
+     }
    }
 
    // Takes 1d string array. Converts to "the internal 2d array of booleans"
    public BarcodeImage(String[] strData)
    {
-      if (checkSize(strData) == true)
-      {
-         //convert each letter to ascii then binary and set appropriately
-         //1s are *, 0s are blank
-         for (int i = 0; i < strData.length; i++) // columns
-         {
-            //pull word into character array
-            char[] chars = strData[i].toCharArray();
-            
-            for (int j = 0; j < chars.length; j++)
-            {
-               //converts letter to binary
-               int temp = Character.getNumericValue(chars[j]); 
-               String temp2 = Integer.toBinaryString(temp);
-               
-               //add *s to the rows where binary = 1
-               char[] binary = temp2.toCharArray();
-               for (int k = binary.length - 1; k < 0; k--)
-               {
-                  if (binary[k] == '1')
-                  {
-                     this.setPixel(binary.length - k,  i,  true);
-                  }
-                  else
-                  {
-                     this.setPixel(binary.length - k,  i,  false);
-                  }
-               }
-            }
-            
-         }
-      }
-   }
+     this.imageData = new boolean[MAX_WIDTH][MAX_HEIGHT];
+       
+     if (checkSize(strData) == true)
+     {
+        //convert each letter to ascii then binary and set appropriately
+        //1s are *, 0s are blank
+        for (int i = 0; i < strData.length; i++) // columns
+        {
+           //pull word into character array
+           char[] chars = strData[i].toCharArray();
+           
+           for (int j = 0; j < chars.length; j++)
+           {
+              //converts letter to binary
+              int temp = Character.getNumericValue(chars[j]);
+              String temp2 = Integer.toBinaryString(temp);
+              
+              //add *s to the rows where binary = 1
+              char[] binary = temp2.toCharArray();
+              for (int k = 0; k < binary.length; k++)
+              {
+                 if (binary[k] == '1')
+                 {
+                    this.setPixel((binary.length - k - 1),  i,  true);
+                 }
+                 else
+                 {
+                    this.setPixel((binary.length - k - 1),  i,  false);
+                 }
+              }
+           }
+           
+        }
+     }
+  }
    //Constructors END
 
    //Individual Pixel getter
@@ -156,7 +160,14 @@ class BarcodeImage implements Cloneable
        {
           for(int j = 0; j < MAX_HEIGHT; j++) 
           {
-             System.out.println(this.imageData[i][j]);
+             if (this.imageData[i][j] == true)
+             {
+                System.out.print("*");
+             }
+             else
+             {
+                System.out.print(" ");
+             }
           }
        }
     }

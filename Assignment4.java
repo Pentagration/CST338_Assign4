@@ -344,32 +344,37 @@ class DataMatrix implements BarcodeIO
 
     private void cleanImage()
     {
-      offset = BarcodeImage.MAX_HEIGHT - this.actualHeight;
+      offset = BarcodeImage.MAX_HEIGHT - (this.actualHeight + 1);
       shiftImageDown(offset);
-      offset = BarcodeImage.MAX_WIDTH - this.actualWidth;
+      offset = BarcodeImage.MAX_WIDTH - (this.actualWidth + 1);
       shiftImageLeft(offset);
     }
 
     private void shiftImageDown(int offset)
     {
-      for(int x = actualWidth; x >=0; x--)
+      boolean pixel = false;
+      for(int x = actualWidth; x >= 0; x--)
         {
             for(int y = actualHeight; y >= 0; y--)
             {
-                if(y == 0 || x == MAX_HEIGHT - 1)
-                {
-                    this.setPixel(x, y, true);
-                }
-                else
-                {
-                    this.setPixel(x, y, false);
-                }
+               pixel = image.getPixel(x, y);
+               image.setPixel(x, y, false);
+               image.setPixel(x, y + offset, pixel);
             }
         }
     }
 
     private void shiftImageLeft(int offset)
     {
-
+      boolean pixel = false;
+      for(int x = 0; x <= actualWidth; x++)
+        {
+            for(int y = actualHeight; y >= 0; y--)
+            {
+               pixel = image.getPixel(x, y);
+               image.setPixel(x, y, false);
+               image.setPixel(x, y + offset, pixel);
+            }
+        }
     }
 }

@@ -257,7 +257,8 @@ class DataMatrix implements BarcodeIO
     //barcode constructor
     DataMatrix(BarcodeImage image)
     {
-
+       this.text = "";
+       scan(image);
     }
 
     //string constructor
@@ -269,7 +270,15 @@ class DataMatrix implements BarcodeIO
     @Override
     public boolean scan(BarcodeImage bc)
     {
-        // TODO Auto-generated method stub
+        try 
+        {
+            image = (BarcodeImage)bc.clone();
+            this.actualHeight = BarcodeImage.MAX_HEIGHT;
+            this.actualWidth = BarcodeImage.MAX_WIDTH;
+            cleanImage()//not implemented yet
+            return true;
+        } catch (CloneNotSupportedException e) {
+        }
         return false;
     }
 
@@ -306,5 +315,15 @@ class DataMatrix implements BarcodeIO
     {
         // TODO Auto-generated method stub
 
+    }
+
+    public int getActualHeight()
+    {
+      return actualWidth;
+    }
+
+    public int getActualWidth()
+    {
+      return actualWidth;
     }
 }

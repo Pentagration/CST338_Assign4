@@ -273,9 +273,9 @@ class DataMatrix implements BarcodeIO
         try 
         {
             image = (BarcodeImage)bc.clone();
-            this.actualHeight = BarcodeImage.MAX_HEIGHT;
-            this.actualWidth = BarcodeImage.MAX_WIDTH;
-            cleanImage()//not implemented yet
+            this.actualHeight = getActualHeight();
+            this.actualWidth = getActualWidth();
+            cleanImage();//not implemented yet
             return true;
         } catch (CloneNotSupportedException e) {
         }
@@ -319,11 +319,57 @@ class DataMatrix implements BarcodeIO
 
     public int getActualHeight()
     {
-      return actualWidth;
+      int height = 0;
+      for (int i = 0; i < BarcodeImage.MAX_HEIGHT;i++)
+      {
+         if (image.getPixel(i, 0) == false)
+            break;
+         ++height;
+      }
+      return height;
     }
 
     public int getActualWidth()
     {
-      return actualWidth;
+      int width = 0;
+      int height = getActualHeight();
+      for (int i = 0; i < BarcodeImage.MAX_WIDTH; i++)
+      {
+         if (image.getPixel(height, i) == false)
+            break;
+         ++width;
+      }
+      return width;
+    }
+
+    private void cleanImage()
+    {
+      offset = BarcodeImage.MAX_HEIGHT - this.actualHeight;
+      shiftImageDown(offset);
+      offset = BarcodeImage.MAX_WIDTH - this.actualWidth;
+      shiftImageLeft(offset);
+    }
+
+    private void shiftImageDown(int offset)
+    {
+      for(int x = actualWidth; x >=0; x--)
+        {
+            for(int y = actualHeight; y >= 0; y--)
+            {
+                if(y == 0 || x == MAX_HEIGHT - 1)
+                {
+                    this.setPixel(x, y, true);
+                }
+                else
+                {
+                    this.setPixel(x, y, false);
+                }
+            }
+        }
+    }
+
+    private void shiftImageLeft(int offset)
+    {
+
     }
 }

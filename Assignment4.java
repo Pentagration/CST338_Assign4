@@ -22,8 +22,8 @@ public class Assign4
 interface BarcodeIO
 {
    // All Implimentations expected to store img and text
-   //BarcodeImage img;
 
+   //BarcodeImage img;
    //String text;
 
    public boolean scan(BarcodeImage bc);
@@ -119,7 +119,7 @@ class BarcodeImage implements Cloneable
 
    //Individual Pixel setter
    // Does this need to be strictly less than?
-   // 
+   //
     public boolean setPixel(int row, int col, boolean value)
     {
        if (row <= MAX_WIDTH && col <= MAX_HEIGHT)
@@ -193,8 +193,8 @@ class DataMatrix implements BarcodeIO
    public static final char BLACK_CHAR = '*';
    public static final char WHITE_CHAR = ' ';
 
+   // Declare in BarcodeIO or here?
    private BarcodeImage image;
-
    private String text;
 
    private int actualWidth, actualHeight;
@@ -211,6 +211,8 @@ class DataMatrix implements BarcodeIO
    //barcode constructor
    DataMatrix(BarcodeImage image)
    {
+     // Call scan()
+     scan(image);
 
    }
 
@@ -223,7 +225,19 @@ class DataMatrix implements BarcodeIO
    @Override
    public boolean scan(BarcodeImage bc)
    {
-      // TODO Auto-generated method stub
+     // Mutator for img. Calls Barcode clone, cleanImage, set ActualWidth and height
+     // deal with CloneNotSupportedException. CLONE CALL IN TRY CATCH BLOCK. Catches clause empty.
+
+     try
+     {
+        return super.clone();
+     }
+     catch(CloneNotSupportedException e)
+     {
+       //Intentionally Emty
+     }
+
+
       return false;
    }
 

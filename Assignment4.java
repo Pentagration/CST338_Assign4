@@ -125,10 +125,27 @@ class BarcodeImage implements Cloneable
                 this.setPixel(MAX_HEIGHT - 1, x, true);
             }
 
-            //side spine
+            //leftside spine
             for (int y = 0; y <= row + 2; y++)
             {
                 this.setPixel((MAX_HEIGHT - y - 1), 0, true);
+            }
+
+            //top spine
+            for (int x = 0; x <= column; x++)
+            {
+                if (x % 2 == 0)
+                {
+                    this.setPixel(MAX_HEIGHT - (row + 3), x, true);
+                }
+            }
+
+            //rightside spine
+            for (int y = 0; y <= row + 2; y++)
+            {
+                if (y % 2 == 0) {
+                    this.setPixel((MAX_HEIGHT - y - 1), column, true);
+                }
             }
         }
     }

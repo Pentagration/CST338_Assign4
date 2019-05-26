@@ -78,6 +78,7 @@ class BarcodeImage implements Cloneable
         if (checkSize(strData) == true)
         {
             int column = 1;
+            int row = 0;
 
             //convert each letter to ascii then binary and set appropriately
             //1s are *, 0s are blank
@@ -96,21 +97,38 @@ class BarcodeImage implements Cloneable
 
                     //add *s to the rows where binary = 1
                     char[] binary = temp2.toCharArray();
+
+                    if (binary.length > row)
+                    {
+                        row = binary.length;
+                    }
+
                     for (int k = 0; k < binary.length; k++)
                     {
                         if (binary[k] == '1')
                         {
-                            this.setPixel((MAX_HEIGHT - (binary.length - k)), column, true);
+                            this.setPixel((MAX_HEIGHT - (binary.length - k) - 1), column, true);
                         }
                         else
                         {
-                            this.setPixel((MAX_HEIGHT - (binary.length - k)),  column,  false);
+                            this.setPixel((MAX_HEIGHT - (binary.length - k) - 1),  column,  false);
                         }
                     }
 
                     column++;
                 }
 
+            }
+            //bottom spine
+            for (int x = 0; x <= column; x++)
+            {
+                this.setPixel(MAX_HEIGHT - 1, x, true);
+            }
+
+            //side spine
+            for (int y = 0; y <= row + 2; y++)
+            {
+                this.setPixel((MAX_HEIGHT - y - 1), 0, true);
             }
         }
     }

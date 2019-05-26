@@ -9,11 +9,11 @@ public class Assign4
 {
    public static void main(String[] args)
       {
-      String[] testString = new String[] 
+      String[] testString = new String[]
             {"This", "is", "a", "good", "SAMPLE", "to", "look", "at."};
       BarcodeImage test1 = new BarcodeImage();
       BarcodeImage test2 = new BarcodeImage(testString);
-      
+
       test1.displayToConsole();
       test2.displayToConsole();
       }
@@ -53,10 +53,10 @@ class BarcodeImage implements Cloneable
    public BarcodeImage()
    {
      this.imageData = new boolean[MAX_WIDTH][MAX_HEIGHT];
-       
-       for(int x=0;x<MAX_WIDTH;x++) 
+
+       for(int x=0;x<MAX_WIDTH;x++)
      {
-        for(int y=0;y<MAX_HEIGHT;y++) 
+        for(int y=0;y<MAX_HEIGHT;y++)
         {
            this.setPixel(x, y, false);
         }
@@ -67,7 +67,7 @@ class BarcodeImage implements Cloneable
    public BarcodeImage(String[] strData)
    {
      this.imageData = new boolean[MAX_WIDTH][MAX_HEIGHT];
-       
+
      if (checkSize(strData) == true)
      {
         //convert each letter to ascii then binary and set appropriately
@@ -76,13 +76,13 @@ class BarcodeImage implements Cloneable
         {
            //pull word into character array
            char[] chars = strData[i].toCharArray();
-           
+
            for (int j = 0; j < chars.length; j++)
            {
               //converts letter to binary
               int temp = Character.getNumericValue(chars[j]);
               String temp2 = Integer.toBinaryString(temp);
-              
+
               //add *s to the rows where binary = 1
               char[] binary = temp2.toCharArray();
               for (int k = 0; k < binary.length; k++)
@@ -97,7 +97,7 @@ class BarcodeImage implements Cloneable
                  }
               }
            }
-           
+
         }
      }
   }
@@ -118,6 +118,8 @@ class BarcodeImage implements Cloneable
    }
 
    //Individual Pixel setter
+   // Does this need to be strictly less than?
+   // 
     public boolean setPixel(int row, int col, boolean value)
     {
        if (row <= MAX_WIDTH && col <= MAX_HEIGHT)
@@ -137,12 +139,12 @@ class BarcodeImage implements Cloneable
     private boolean checkSize(String[] data)
     {
        int size = 0;
-       
+
        for (int i = 0; i < data.length; i++)
        {
            size = size + data[i].length();
        }
-      
+
        if(size > MAX_WIDTH || data == null) //should this be -1?
        {
           return false;
@@ -156,9 +158,9 @@ class BarcodeImage implements Cloneable
     // Optional Testing method
     public void displayToConsole()
     {
-       for(int i = 0; i < MAX_WIDTH; i++) 
+       for(int i = 0; i < MAX_WIDTH; i++)
        {
-          for(int j = 0; j < MAX_HEIGHT; j++) 
+          for(int j = 0; j < MAX_HEIGHT; j++)
           {
              if (this.imageData[i][j] == true)
              {
@@ -205,17 +207,17 @@ class DataMatrix implements BarcodeIO
       this.actualWidth = 0;
       this.image = new BarcodeImage();
    }
-   
+
    //barcode constructor
    DataMatrix(BarcodeImage image)
    {
-      
+
    }
-   
+
    //string constructor
    DataMatrix(String text)
    {
-      
+
    }
 
    @Override
@@ -250,13 +252,13 @@ class DataMatrix implements BarcodeIO
    public void displayTextToConsole()
    {
       // TODO Auto-generated method stub
-      
+
    }
 
    @Override
    public void displayImageToConsole()
    {
       // TODO Auto-generated method stub
-      
+
    }
 }

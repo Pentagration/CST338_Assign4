@@ -234,23 +234,52 @@ class DataMatrix implements BarcodeIO
      return actualHeight;
    }
 
+   // Counts 'spine' of matrix to find coded width
+   private int computeSignalWidth()
+   {
+
+   }
+
+   // Counts 'spine' of matrix to find coded height. ARGUMENT?
+   private int computeSignalHeight()
+   {
+
+   }
+
+   // Justifies image to lower right corner. ARGUMENT?
+   private void cleanImage()
+   {
+
+   }
+
+
+
+   // Incomplete
    @Override
    public boolean scan(BarcodeImage bc)
    {
+     boolean flag = false;
      // Mutator for img. Calls Barcode clone, cleanImage, set ActualWidth and height
      // deal with CloneNotSupportedException. CLONE CALL IN TRY CATCH BLOCK. Catches clause empty.
 
      try
      {
       DataMatrix clone = (DataMatrix)BarCodeIO.clone();
+      flag = true;
      }
-     catch(CloneNotSupportedException e)
+     catch(CloneNotSupportedException e) // POINT OF CONERN Not sure if correct exeption
      {
        //Intentionally Empty
      }
 
+     this.cleanImage(bc);
 
-      return false;
+     //Actual Value setters
+     this.actualWidth = this.computeSignalWidth();
+     this.actualHeight = this.computeSignalHeight();
+
+
+      return flag;
    }
 
    @Override

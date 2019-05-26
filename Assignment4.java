@@ -264,7 +264,8 @@ class DataMatrix implements BarcodeIO
     //string constructor
     DataMatrix(String text)
     {
-
+       this.text = text;
+       generateImageFromText();
     }
 
     @Override
@@ -292,8 +293,23 @@ class DataMatrix implements BarcodeIO
     @Override
     public boolean generateImageFromText()
     {
-        // TODO Auto-generated method stub
-        return false;
+        //convert sentence to string array (removes spaces)
+        //odd indicies get a space
+        if (this.text.length() < BarcodeImage.MAX_WIDTH) {
+            String[] tempArray = this.text.split(" ");
+
+            for (int i = 0; i < tempArray.length; i++)
+            {
+                tempArray[i] = tempArray[i] + " ";
+            }
+
+            this.image = new BarcodeImage(tempArray);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     @Override

@@ -86,14 +86,12 @@ class BarcodeImage implements Cloneable
             {
                 //pull word into character array
                 char[] chars = strData[i].toCharArray();
-                System.out.println(chars);
 
                 for (int j = 0; j < chars.length; j++)
                 {
                     //converts letter to binary
                     int temp = (int) chars[j];
                     String temp2 = Integer.toBinaryString(temp);
-                    System.out.println(temp2);
 
                     //add *s to the rows where binary = 1
                     char[] binary = temp2.toCharArray();

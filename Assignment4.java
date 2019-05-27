@@ -397,7 +397,7 @@ class DataMatrix implements BarcodeIO
 
     }
 
-    public int getActualHeight()
+    private int computeSignalHeight()
     {
         int height = 0;
         for (int i = BarcodeImage.MAX_HEIGHT - 1; i > 0; i--)
@@ -409,7 +409,12 @@ class DataMatrix implements BarcodeIO
         return height;
     }
 
-    public int getActualWidth()
+    public int getActualHeight()
+    {
+        return computeSignalHeight();
+    }
+
+    private int computeSignalWidth()
     {
         int width = 0;
         int height = getActualHeight();
@@ -420,6 +425,11 @@ class DataMatrix implements BarcodeIO
             ++width;
         }
         return width;
+    }
+
+    public int getActualWidth()
+    {
+        return computeSignalWidth();
     }
 
     private void cleanImage()
